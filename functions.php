@@ -6,6 +6,9 @@ if ( !defined( 'SHOESTRAP_OPT_NAME' ) )
 // Include some admin options.
 require_once locate_template( 'lib/admin-options.php' );
 
+// Include some hooks to remove
+require_once locate_template( 'lib/remove-hooks.php' );
+
 /*
  * Add a less file from our child theme to the parent theme's compiler.
  * This uses the 'shoestrap_compiler' filter that exists in the shoestrap compiler
@@ -43,7 +46,8 @@ function shoestrap_child_load_stylesheet() {
 
 function shoestrap_pjax() {
 	global $ss_settings;
-	if ( $ss_settings['pjax'] == 1 ) {
+	$use_pjax = (is_object($ss_settings)) ? $ss_settings['pjax'] : 0;
+	if ( $use_pjax == 1 ) {
 		/**
 		 * Enqueue pjax.js
 		 */
